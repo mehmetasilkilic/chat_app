@@ -1,16 +1,17 @@
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView } from "react-native";
 
-import SignIn from "./src/Views/SignIn";
-import ChatRoom from "./src/Views/ChatRoom";
+import Layout from "./Layout";
+
+import { UserProvider } from "./src/Context/UserContext";
 
 export default function App() {
-  const user = true;
-
   return (
-    <SafeAreaView className="flex bg-gray-800">
-      <StatusBar style="light" />
-      <View>{user ? <ChatRoom /> : <SignIn />}</View>
-    </SafeAreaView>
+    <UserProvider>
+      <SafeAreaView className="flex bg-gray-800">
+        <StatusBar style="light" />
+        <Layout />
+      </SafeAreaView>
+    </UserProvider>
   );
 }

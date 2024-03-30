@@ -1,18 +1,57 @@
 import { useState } from "react";
-import { View, TextInput, TouchableOpacity, Image } from "react-native";
+import {
+  KeyboardAvoidingView,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Platform,
+  Alert,
+} from "react-native";
+import { ref, child, push, update } from "firebase/database";
 
-import SendIcon from "../../../assets/sendIcon.png";
+import { useUserContext } from "../../../Context/UserContext";
+
+import { db } from "../../../../firebaseConfig";
+
+import SendIcon from "../../../../assets/sendIcon.png";
+
+type MessageType = {
+  email: string;
+  message: string;
+  createdAt: Date;
+};
 
 const SendMessage = () => {
   const [formValue, setFormValue] = useState("");
 
-  const sendMessage = () => {
+  const { user } = useUserContext();
+
+  const sendMessage = async () => {
     if (formValue.trim() === "") return;
 
-    setFormValue("");
+    try {
+      const params = {
+        email: user,
+        message: formValue,
+        createdAt: new Date(),
+      };
+
+      const newPostKey = push(child(ref(db), "messages")).key;
+      const updates: { [key: string]: Partial<MessageType> } = {};
+      updates["/messages/" + newPostKey] = params;
+      setFormValue("");
+
+      return update(ref(db), updates);
+    } catch {
+      Alert.alert("There was an error while sending the message");
+    }
   };
   return (
-    <View className="flex-row items-center justify-between w-full px-8 py-2 border-t border-gray-500">
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={60}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      className="flex-row items-center justify-between w-full px-8 py-2 border-t border-gray-500"
+    >
       <TextInput
         value={formValue}
         onChangeText={(text) => setFormValue(text)}
@@ -29,7 +68,7 @@ const SendMessage = () => {
       >
         <Image className="h-8 w-8" source={SendIcon} />
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

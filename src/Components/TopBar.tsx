@@ -1,16 +1,28 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, Alert } from "react-native";
 
-interface TopBarProps {
-  email: string;
-}
+import { useUserContext } from "../Context/UserContext";
 
-const TopBar = ({ email }: TopBarProps) => {
-  const handleSignOut = () => {};
+const TopBar = () => {
+  const { user, updateUser } = useUserContext();
+
+  const handleSignOut = () => {
+    Alert.alert(
+      "Confirm Sign Out",
+      "Are you sure you want to sign out?",
+      [{ text: "Cancel" }, { text: "Sign Out", onPress: confirmSignOut }],
+      { cancelable: false }
+    );
+  };
+
+  const confirmSignOut = () => {
+    updateUser("");
+  };
+
   return (
     <View className="h-12 w-full flex-row items-center justify-between px-8 border-b border-gray-500">
       <View className="justify-center">
         <Text className="text-white text-lg font-bold">Chat APP</Text>
-        <Text className="text-gray-300 text-xs">{email}</Text>
+        <Text className="text-gray-300 text-xs">{user}</Text>
       </View>
 
       <TouchableOpacity

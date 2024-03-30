@@ -1,10 +1,27 @@
 import { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput } from "react-native";
 
-const SignIn = () => {
-  const [text, onChangeText] = useState<string>("");
+import { useUserContext } from "../Context/UserContext";
 
-  const handleSignIn = () => {};
+const SignIn = () => {
+  const [email, setEmail] = useState<string>("");
+  const [isError, setIsError] = useState<boolean>(false);
+
+  const { updateUser } = useUserContext();
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSignIn = () => {
+    if (isValidEmail(email)) {
+      setIsError(false);
+      updateUser(email);
+    } else {
+      setIsError(true);
+    }
+  };
 
   return (
     <View className="px-8 justify-evenly h-full w-full bg-gray-800">
@@ -14,12 +31,20 @@ const SignIn = () => {
       <View>
         <TextInput
           autoCapitalize="none"
+          keyboardType="email-address"
           placeholder="Please type your e-mail..."
           placeholderTextColor="gray"
           className="border border-gray-300 bg-gray-700 text-white text-lg leading-5 px-3 h-12 rounded-3xl focus:outline-none focus:border-green-700"
-          onChangeText={onChangeText}
-          value={text}
+          onChangeText={setEmail}
+          value={email}
         />
+        {isError ? (
+          <Text className="absolute bottom-14 text-red-400 px-3 pt-2">
+            You have to type valid email
+          </Text>
+        ) : (
+          <></>
+        )}
         <TouchableOpacity
           className="sign-in bg-green-700 mt-8 px-4 h-12 rounded-3xl cursor-pointer items-center justify-center"
           onPress={handleSignIn}
