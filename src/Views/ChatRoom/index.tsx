@@ -9,11 +9,7 @@ import TopBar from "../../Components/TopBar";
 import ChatMessage from "./Components/ChatMessage";
 import SendMessage from "./Components/SendMessage";
 
-type MessageType = {
-  email: string;
-  message: string;
-  createdAt: Date;
-};
+import { MessageType } from "../../Models/MessageType";
 
 const ChatRoom = () => {
   const flatListRef = useRef<FlatList | null>(null);

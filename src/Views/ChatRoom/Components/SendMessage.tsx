@@ -15,11 +15,7 @@ import { db } from "../../../../firebaseConfig";
 
 import SendIcon from "../../../../assets/sendIcon.png";
 
-type MessageType = {
-  email: string;
-  message: string;
-  createdAt: Date;
-};
+import { MessageType } from "../../../Models/MessageType";
 
 const SendMessage = () => {
   const [formValue, setFormValue] = useState("");
