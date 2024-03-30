@@ -27,7 +27,9 @@ const ChatMessage = ({ data }: { data: ChatMessageProps }) => {
 
   return (
     <View
-      className={`${messageType === "sent" ? "flex-row-reverse" : "flex-row"}`}
+      className={`${
+        messageType === "sent" ? "flex-row-reverse" : "flex-row"
+      } ml-8`}
     >
       <View
         className={`px-4 py-2 mb-4 rounded-3xl ${

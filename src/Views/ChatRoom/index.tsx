@@ -49,7 +49,7 @@ const ChatRoom = () => {
       <TopBar />
       <FlatList
         ref={flatListRef}
-        className="mx-8 flex-1"
+        className="flex-1"
         data={messages}
         renderItem={({ item }) => <ChatMessage data={item} />}
         keyExtractor={(_, index) => index.toString()}

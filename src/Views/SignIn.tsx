@@ -16,8 +16,8 @@ const SignIn = () => {
 
   const handleSignIn = () => {
     if (isValidEmail(email)) {
-      setIsError(false);
       updateUser(email);
+      setIsError(false);
     } else {
       setIsError(true);
     }
