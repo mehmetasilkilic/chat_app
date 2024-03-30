@@ -22,7 +22,6 @@ const ChatMessage = ({ data }: { data: ChatMessageProps }) => {
     return formattedDate;
   };
 
-  //   const messageType = email === user.email ? "sent" : "received";
   const messageType = data.email === user ? "sent" : "received";
 
   return (
