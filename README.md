@@ -7,8 +7,6 @@
 Before running this project locally, ensure you have the following dependencies installed:
 
 - [Node.js](https://nodejs.org/) (v21.4.0)
-- [npm](https://www.npmjs.com/) 
-
 
 Simulator Versions
 
