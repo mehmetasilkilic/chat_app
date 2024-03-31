@@ -29,8 +29,8 @@ const ChatRoom = () => {
       const queryD = query(dataRef, orderByChild("createdAt"), limitToLast(1));
       return onValue(queryD, (snapshot) => {
         if (snapshot) {
-          const data = Object.values(snapshot.val() as MessageType[])[0];
           if (!isFirstRender.current) {
+            const data = Object.values(snapshot.val() as MessageType[])[0];
             setMessages((prevMessages) => [...prevMessages, data]);
           } else {
             isFirstRender.current = false;
